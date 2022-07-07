@@ -33,15 +33,6 @@ export default {
     },
   },
 
-  watch: {
-    period: {
-      handler: function () {
-        this.createChart();
-      },
-      deep: true,
-    },
-  },
-
   mounted() {
     this.createChart();
   },
