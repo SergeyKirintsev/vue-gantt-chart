@@ -50,8 +50,10 @@ export default {
           start: new Date('2022/1/2'),
           end: new Date('2022/1/8'),
           task: 1,
-          name: 'заправка',
-          background: 'red',
+          name: 'Заправка\nСледом тягач',
+          backgroundColor: 'red',
+          height: 20,
+          progress: '30/56',
         },
         {
           id: '2',
@@ -59,7 +61,8 @@ export default {
           end: new Date('2022/1/15'),
           task: 2,
           name: 'мойка',
-          background: 'green',
+          backgroundColor: '#e66465',
+          height: 30,
         },
         {
           id: '3',
@@ -106,12 +109,18 @@ export default {
       const start = new Date(taskDuration.start);
       const end = new Date(taskDuration.end);
       const task = taskDuration.task;
+      const backgroundColor = taskDuration.color;
+      const height = taskDuration.height;
+      const top = taskDuration.top;
 
       const newTaskDuration = {
         id: Date.now(),
         start,
         end,
         task,
+        backgroundColor,
+        height,
+        top,
       };
 
       this.taskDurations.push(newTaskDuration);

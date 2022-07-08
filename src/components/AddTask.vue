@@ -39,6 +39,19 @@
             max="2050-12-31"
           />
         </fieldset>
+        <fieldset>
+          <p>Choose color:</p>
+          <div>
+            <input v-model="color" type="color" />
+            <!-- <label for="head">Head</label> -->
+          </div>
+        </fieldset>
+        <fieldset>
+          <label for="height">height</label>
+          <input v-model="height" id="height" type="number" max="40" />
+          <label for="top">top</label>
+          <input v-model="top" id="top" type="number" max="20" />
+        </fieldset>
       </div>
       <button @click.prevent="addTaskDuration()">Add</button>
     </form>
@@ -60,6 +73,9 @@ export default {
       selectedTask: '',
       start: '2022-01-01',
       end: '2022-01-05',
+      color: '#e66465',
+      height: 20,
+      top: 0,
     };
   },
 
@@ -73,6 +89,9 @@ export default {
         start: this.start,
         end: this.end,
         task: this.selectedTask.id,
+        color: this.color,
+        height: this.height,
+        top: this.top,
       };
       this.$emit('add-task-duration', taskDuration);
     },

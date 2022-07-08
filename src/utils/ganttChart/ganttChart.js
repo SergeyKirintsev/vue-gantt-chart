@@ -266,6 +266,22 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
 
     taskDurationEl.ondrop = concatTaskDurations;
 
+    if (taskDuration.backgroundColor) {
+      taskDurationEl.style.background = taskDuration.backgroundColor;
+    }
+    if (taskDuration.height) {
+      taskDurationEl.style.height = `${taskDuration.height}px`;
+    }
+    if (taskDuration.name) {
+      taskDurationEl.title = taskDuration.name;
+    }
+    if (taskDuration.progress) {
+      taskDurationEl.innerText = taskDuration.progress;
+    }
+    if (taskDuration.top) {
+      taskDurationEl.style.top = `${taskDuration.top}px`;
+    }
+
     // append at start pos
     startCell.appendChild(taskDurationEl);
 
