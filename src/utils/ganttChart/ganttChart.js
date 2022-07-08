@@ -266,6 +266,35 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
 
     taskDurationEl.ondrop = concatTaskDurations;
 
+    if (taskDuration.iconsLeft) {
+      let div = document.createElement('div');
+      div.classList.add('left-icons');
+
+      let img = document.createElement('img');
+      img.src = '/img/basket.svg';
+      div.appendChild(img);
+
+      img = document.createElement('img');
+      img.src = '/img/delivery.svg';
+      div.appendChild(img);
+
+      taskDurationEl.appendChild(div);
+    }
+
+    if (taskDuration.progress) {
+      // taskDurationEl.innerText = taskDuration.progress;
+      const span = document.createElement('span');
+      span.classList.add('taskDuration__span');
+      span.innerText = taskDuration.progress;
+      taskDurationEl.appendChild(span);
+    }
+
+    if (taskDuration.iconsRight) {
+      const img = document.createElement('img');
+      img.src = '/img/excel.svg';
+      taskDurationEl.appendChild(img);
+    }
+
     if (taskDuration.backgroundColor) {
       taskDurationEl.style.background = taskDuration.backgroundColor;
     }
@@ -275,9 +304,7 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
     if (taskDuration.name) {
       taskDurationEl.title = taskDuration.name;
     }
-    if (taskDuration.progress) {
-      taskDurationEl.innerText = taskDuration.progress;
-    }
+
     if (taskDuration.top) {
       taskDurationEl.style.top = `${taskDuration.top}px`;
     }

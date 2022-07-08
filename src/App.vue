@@ -19,7 +19,7 @@ import TrackerPeriod from './components/TrackerPeriod.vue';
       <TrackerPeriod @update-period="updatePeriod" />
     </div>
 
-    <p v-if="selectedTaskDurationId">Task duration id: {{ selectedTaskDurationId }}</p>
+    <p>Task duration id: {{ selectedTaskDurationId ? selectedTaskDurationId : 'select' }}</p>
   </div>
 </template>
 
@@ -52,8 +52,32 @@ export default {
           task: 1,
           name: 'Заправка\nСледом тягач',
           backgroundColor: 'red',
+          height: 23,
+          progress: '12/99',
+          iconsLeft: [],
+          iconsRight: [],
+        },
+        {
+          id: '11',
+          start: new Date('2022/1/1'),
+          end: new Date('2022/1/5'),
+          task: 1,
+          name: 'Text',
+          backgroundColor: '#65e6bf',
           height: 20,
           progress: '30/56',
+          top: 15,
+        },
+        {
+          id: '12',
+          start: new Date('2022/1/5'),
+          end: new Date('2022/1/7'),
+          task: 1,
+          name: 'Text',
+          backgroundColor: 'yellow',
+          height: 25,
+          progress: '5/6',
+          top: 10,
         },
         {
           id: '2',
@@ -78,9 +102,11 @@ export default {
         },
         {
           id: '28',
-          start: new Date('2022/1/20'),
+          start: new Date('2022/1/13'),
           end: new Date('2022/1/21'),
           task: 28,
+          iconsLeft: [],
+          iconsRight: [],
         },
       ],
     };

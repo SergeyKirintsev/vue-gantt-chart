@@ -35,6 +35,13 @@ export default {
     onChart(e) {
       const el = e.target;
       if (el.classList.contains('taskDuration')) {
+        const row = el.closest('.gantt-time-period');
+        const tasks = row.querySelectorAll('.taskDuration');
+        for (const task of tasks) {
+          task.style.zIndex = 1;
+        }
+        el.style.zIndex = 2;
+
         this.$emit('select-task-duration', el.id);
         return;
       }
@@ -211,6 +218,10 @@ button:hover {
   border-radius: 5px;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.05);
   cursor: move;
+
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
 }
 
 .taskDuration:focus {
@@ -307,5 +318,14 @@ select {
   border-right: 1px solid red;
   top: 80px;
   z-index: 10;
+}
+
+.left-icons {
+  display: flex;
+}
+
+.taskDuration__span {
+  font-size: 14px;
+  line-height: 1;
 }
 </style>
