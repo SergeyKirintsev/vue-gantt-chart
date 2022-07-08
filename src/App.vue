@@ -8,12 +8,18 @@ import TrackerPeriod from './components/TrackerPeriod.vue';
 
 <template>
   <div>
-    <GanttChart v-bind="{ tasks, taskDurations, period }" :key="componentKey" />
+    <GanttChart
+      v-bind="{ tasks, taskDurations, period }"
+      :key="componentKey"
+      @select-task-duration="selectTaskDuration"
+    />
 
     <div id="add-forms-container">
       <AddTask v-bind="{ tasks }" @add-task-duration="addTaskDuration" @add-task="addTask" />
       <TrackerPeriod @update-period="updatePeriod" />
     </div>
+
+    <p v-if="selectedTaskDurationId">Task duration id: {{ selectedTaskDurationId }}</p>
   </div>
 </template>
 
@@ -22,6 +28,8 @@ export default {
   data() {
     return {
       componentKey: 0,
+      selectedTaskDurationId: null,
+
       period: {
         fromSelectYear: 2022,
         fromSelectMonth: 0,
@@ -62,7 +70,7 @@ export default {
           task: 4,
         },
         {
-          id: '5',
+          id: '28',
           start: new Date('2022/1/20'),
           end: new Date('2022/1/21'),
           task: 28,
@@ -104,6 +112,10 @@ export default {
 
       this.taskDurations.push(newTaskDuration);
       this.forceRerender();
+    },
+
+    selectTaskDuration(id) {
+      this.selectedTaskDurationId = id;
     },
   },
 };

@@ -33,7 +33,12 @@ export default {
     },
 
     onChart(e) {
-      console.log(e.target);
+      const el = e.target;
+      if (el.classList.contains('taskDuration')) {
+        this.$emit('select-task-duration', el.id);
+        return;
+      }
+      this.$emit('select-task-duration', null);
     },
   },
 
