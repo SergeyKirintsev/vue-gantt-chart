@@ -50,12 +50,16 @@ export default {
           start: new Date('2022/1/2'),
           end: new Date('2022/1/8'),
           task: 1,
+          name: 'заправка',
+          background: 'red',
         },
         {
           id: '2',
           start: new Date('2022/1/10'),
           end: new Date('2022/1/15'),
           task: 2,
+          name: 'мойка',
+          background: 'green',
         },
         {
           id: '3',

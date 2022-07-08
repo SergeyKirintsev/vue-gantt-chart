@@ -264,10 +264,19 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
       }
     });
 
+    taskDurationEl.ondrop = concatTaskDurations;
+
     // append at start pos
     startCell.appendChild(taskDurationEl);
 
     return days;
+  }
+
+  function concatTaskDurations(e) {
+    if (e.target.id === taskDurationElDragged.id || e.shiftKey === false) return;
+    console.log(e.target.id);
+    console.log(taskDurationElDragged.id);
+    alert('concat Task Durations ?');
   }
 
   function onTaskDurationDrop(e) {
