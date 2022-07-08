@@ -288,4 +288,19 @@ select {
 .inner-form-container h1 {
   margin-bottom: 0.5rem;
 }
+
+.current-day {
+  background-color: aquamarine;
+  position: relative;
+}
+
+.current-day::before {
+  content: '';
+  position: absolute;
+  right: 14px;
+  height: 240px;
+  border-right: 1px solid red;
+  top: 80px;
+  z-index: 10;
+}
 </style>
