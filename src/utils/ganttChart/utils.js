@@ -17,7 +17,7 @@ export function getDaysInMonth(year, month) {
 }
 
 export function getDayOfWeek(year, month, day) {
-  const daysOfTheWeekArr = ["M", "T", "W", "T", "F", "S", "S"];
+  const daysOfTheWeekArr = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
   // const daysOfTheWeekArr = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
   const dayOfTheWeekIndex = new Date(year, month, day).getDay();
   return daysOfTheWeekArr[dayOfTheWeekIndex];

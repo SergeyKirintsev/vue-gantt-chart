@@ -1,9 +1,9 @@
 <template>
-  <div role="gantt-chart"></div>
+  <div role="gantt-chart" @click="onChart"></div>
 </template>
 
 <script>
-import { GanttChart } from "../utils/ganttChart/ganttChart";
+import { GanttChart } from '../utils/ganttChart/ganttChart';
 
 export default {
   props: {
@@ -23,13 +23,17 @@ export default {
 
   methods: {
     createChart() {
-      const ganttCharts = document.querySelectorAll("[role=gantt-chart]");
+      const ganttCharts = document.querySelectorAll('[role=gantt-chart]');
 
-      ganttCharts.forEach((gantChart) => (gantChart.innerHTML = ""));
+      ganttCharts.forEach((gantChart) => (gantChart.innerHTML = ''));
 
       ganttCharts.forEach((gantChart) => {
         new GanttChart(gantChart, this.tasks, this.taskDurations, this.period);
       });
+    },
+
+    onChart(e) {
+      console.log(e.target);
     },
   },
 
@@ -46,7 +50,7 @@ export default {
 }
 
 html {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 h1 {
@@ -78,7 +82,7 @@ select {
 }
 
 input {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   height: 100%;
   padding: 10px 5px;
   border: 1px solid #ededed;
@@ -198,11 +202,7 @@ button:hover {
   position: absolute;
   height: 40px;
   z-index: 1;
-  background: linear-gradient(
-    90deg,
-    rgba(158, 221, 255, 1) 0%,
-    rgba(0, 149, 228, 1) 100%
-  );
+  background: linear-gradient(90deg, rgba(158, 221, 255, 1) 0%, rgba(0, 149, 228, 1) 100%);
   border-radius: 5px;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.05);
   cursor: move;
@@ -247,7 +247,7 @@ button:hover {
   opacity: 0.85;
 }
 
-input[type="text"],
+input[type='text'],
 select {
   padding: 5px 7px;
   margin: 8px 0;
@@ -255,7 +255,7 @@ select {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 13px;
 }
 
@@ -268,7 +268,7 @@ select {
   border: 0;
   border-radius: 5px;
   transition: all 0.3s ease;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 13px;
 }
 
