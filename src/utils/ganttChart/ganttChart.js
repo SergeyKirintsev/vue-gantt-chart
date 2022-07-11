@@ -85,10 +85,10 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
       taskOptionsHTMLStrArr.push(`<option value="${task.id}">${task.name}</option>`);
 
       // add delete button
-      const taskRowElDelBtn = document.createElement('button');
-      taskRowElDelBtn.innerText = '✕';
-      taskRowElDelBtn.addEventListener('click', deleteTask);
-      taskRowEl.appendChild(taskRowElDelBtn);
+      // const taskRowElDelBtn = document.createElement('button');
+      // taskRowElDelBtn.innerText = '✕';
+      // taskRowElDelBtn.addEventListener('click', deleteTask);
+      // taskRowEl.appendChild(taskRowElDelBtn);
 
       containerTasks.appendChild(taskRowEl);
     });
@@ -264,11 +264,12 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
       }
     });
 
+    // TODO перетаскивание задачи на задачу
     taskDurationEl.ondrop = concatTaskDurations;
 
     if (taskDuration.iconsLeft) {
       let div = document.createElement('div');
-      div.classList.add('left-icons');
+      div.classList.add('taskDuration__icons');
 
       let img = document.createElement('img');
       img.src = '/img/basket.svg';
@@ -290,9 +291,14 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
     }
 
     if (taskDuration.iconsRight) {
+      let div = document.createElement('div');
+      div.classList.add('taskDuration__icons');
+
       const img = document.createElement('img');
       img.src = '/img/excel.svg';
-      taskDurationEl.appendChild(img);
+      div.appendChild(img);
+
+      taskDurationEl.appendChild(div);
     }
 
     if (taskDuration.backgroundColor) {
@@ -307,6 +313,10 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
 
     if (taskDuration.top) {
       taskDurationEl.style.top = `${taskDuration.top}px`;
+    }
+
+    if (taskDuration.done) {
+      taskDurationEl.classList.add('taskDuration__done');
     }
 
     // append at start pos

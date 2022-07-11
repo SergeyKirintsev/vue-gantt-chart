@@ -87,6 +87,8 @@ export default {
           name: 'мойка',
           backgroundColor: '#e66465',
           height: 30,
+          progress: 'Done',
+          done: true,
         },
         {
           id: '3',

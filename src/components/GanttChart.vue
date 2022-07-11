@@ -320,12 +320,18 @@ select {
   z-index: 10;
 }
 
-.left-icons {
+.taskDuration__icons {
   display: flex;
+  pointer-events: none;
 }
 
 .taskDuration__span {
   font-size: 14px;
   line-height: 1;
+  pointer-events: none;
+}
+
+.taskDuration__done {
+  pointer-events: none;
 }
 </style>
