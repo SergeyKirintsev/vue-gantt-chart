@@ -332,6 +332,9 @@ select {
 }
 
 .taskDuration__done {
-  pointer-events: none;
+  -webkit-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-app-region: no-drag;
+  cursor: default;
 }
 </style>
