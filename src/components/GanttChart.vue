@@ -1,9 +1,9 @@
 <template>
-  <div role="gantt-chart"></div>
+  <div role="gantt-chart" @click="onChart"></div>
 </template>
 
 <script>
-import { GanttChart } from "../utils/ganttChart/ganttChart";
+import { GanttChart } from '../utils/ganttChart/ganttChart';
 
 export default {
   props: {
@@ -23,13 +23,29 @@ export default {
 
   methods: {
     createChart() {
-      const ganttCharts = document.querySelectorAll("[role=gantt-chart]");
+      const ganttCharts = document.querySelectorAll('[role=gantt-chart]');
 
-      ganttCharts.forEach((gantChart) => (gantChart.innerHTML = ""));
+      ganttCharts.forEach((gantChart) => (gantChart.innerHTML = ''));
 
       ganttCharts.forEach((gantChart) => {
         new GanttChart(gantChart, this.tasks, this.taskDurations, this.period);
       });
+    },
+
+    onChart(e) {
+      const el = e.target;
+      if (el.classList.contains('taskDuration')) {
+        const row = el.closest('.gantt-time-period');
+        const tasks = row.querySelectorAll('.taskDuration');
+        for (const task of tasks) {
+          task.style.zIndex = 1;
+        }
+        el.style.zIndex = 2;
+
+        this.$emit('select-task-duration', el.id);
+        return;
+      }
+      this.$emit('select-task-duration', null);
     },
   },
 
@@ -46,7 +62,7 @@ export default {
 }
 
 html {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 h1 {
@@ -78,7 +94,7 @@ select {
 }
 
 input {
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   height: 100%;
   padding: 10px 5px;
   border: 1px solid #ededed;
@@ -198,14 +214,14 @@ button:hover {
   position: absolute;
   height: 40px;
   z-index: 1;
-  background: linear-gradient(
-    90deg,
-    rgba(158, 221, 255, 1) 0%,
-    rgba(0, 149, 228, 1) 100%
-  );
+  background: linear-gradient(90deg, rgba(158, 221, 255, 1) 0%, rgba(0, 149, 228, 1) 100%);
   border-radius: 5px;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.05);
   cursor: move;
+
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
 }
 
 .taskDuration:focus {
@@ -247,7 +263,7 @@ button:hover {
   opacity: 0.85;
 }
 
-input[type="text"],
+input[type='text'],
 select {
   padding: 5px 7px;
   margin: 8px 0;
@@ -255,7 +271,7 @@ select {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 13px;
 }
 
@@ -268,7 +284,7 @@ select {
   border: 0;
   border-radius: 5px;
   transition: all 0.3s ease;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 13px;
 }
 
@@ -287,5 +303,35 @@ select {
 
 .inner-form-container h1 {
   margin-bottom: 0.5rem;
+}
+
+.current-day {
+  background-color: aquamarine;
+  position: relative;
+}
+
+.current-day::before {
+  content: '';
+  position: absolute;
+  right: 14px;
+  height: 240px;
+  border-right: 1px solid red;
+  top: 80px;
+  z-index: 10;
+}
+
+.taskDuration__icons {
+  display: flex;
+  pointer-events: none;
+}
+
+.taskDuration__span {
+  font-size: 14px;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.taskDuration__done {
+  pointer-events: none;
 }
 </style>

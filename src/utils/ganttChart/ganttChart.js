@@ -1,4 +1,4 @@
-import { createHtmlContentFragment } from "./htmlContent.js";
+import { createHtmlContentFragment } from './htmlContent.js';
 import {
   monthDiff,
   dayDiff,
@@ -6,25 +6,24 @@ import {
   getDayOfWeek,
   createFormattedDateFromStr,
   createFormattedDateFromDate,
-} from "./utils.js";
+} from './utils.js';
 
 export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
-  const { fromSelectYear, fromSelectMonth, toSelectYear, toSelectMonth } =
-    period;
+  const { fromSelectYear, fromSelectMonth, toSelectYear, toSelectMonth } = period;
 
   const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
   ];
 
   let taskDurationElDragged;
@@ -32,33 +31,26 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
   const contentFragment = createHtmlContentFragment();
 
   // create grid
-  const containerTasks = contentFragment.querySelector(
-    "#gantt-grid-container__tasks"
-  );
-  const containerTimePeriods = contentFragment.querySelector(
-    "#gantt-grid-container__time"
-  );
+  const containerTasks = contentFragment.querySelector('#gantt-grid-container__tasks');
+  const containerTimePeriods = contentFragment.querySelector('#gantt-grid-container__time');
   // const addTaskForm = contentFragment.querySelector("#add-task");
   // const addTaskDurationForm =
   //   contentFragment.querySelector("#add-task-duration");
   // const taskSelect = addTaskDurationForm.querySelector("#select-task");
 
   function createGrid() {
-    const startMonth = new Date(
-      parseInt(fromSelectYear),
-      parseInt(fromSelectMonth)
-    );
+    const startMonth = new Date(parseInt(fromSelectYear), parseInt(fromSelectMonth));
     const endMonth = new Date(parseInt(toSelectYear), parseInt(toSelectMonth));
     const numMonths = monthDiff(startMonth, endMonth) + 1;
 
     // clear first each time it is changed
-    containerTasks.innerHTML = "";
-    containerTimePeriods.innerHTML = "";
+    containerTasks.innerHTML = '';
+    containerTimePeriods.innerHTML = '';
 
     createTaskRows();
     createMonthsRow(startMonth, numMonths);
     createDaysRow(startMonth, numMonths);
-    createDaysOfTheWeekRow(startMonth, numMonths);
+    // createDaysOfTheWeekRow(startMonth, numMonths);
     createTaskRowsTimePeriods(startMonth, numMonths);
     addTaskDurations();
   }
@@ -68,10 +60,10 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
   ganttChartElement.appendChild(contentFragment);
 
   function createTaskRows() {
-    const emptyRow = document.createElement("div");
-    emptyRow.className = "gantt-task-row";
+    const emptyRow = document.createElement('div');
+    emptyRow.className = 'gantt-task-row';
     // first 3 rows are empty
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 2; i++) {
       containerTasks.appendChild(emptyRow.cloneNode(true));
     }
 
@@ -79,26 +71,24 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
     let taskOptionsHTMLStrArr = [];
 
     tasks.forEach((task) => {
-      const taskRowEl = document.createElement("div");
+      const taskRowEl = document.createElement('div');
       taskRowEl.id = task.id;
-      taskRowEl.className = "gantt-task-row";
+      taskRowEl.className = 'gantt-task-row';
 
-      const taskRowElInput = document.createElement("input");
+      const taskRowElInput = document.createElement('input');
       taskRowEl.appendChild(taskRowElInput);
       taskRowElInput.value = task.name;
 
       // update task name
-      taskRowElInput.addEventListener("change", updateTasks);
+      taskRowElInput.addEventListener('change', updateTasks);
 
-      taskOptionsHTMLStrArr.push(
-        `<option value="${task.id}">${task.name}</option>`
-      );
+      taskOptionsHTMLStrArr.push(`<option value="${task.id}">${task.name}</option>`);
 
       // add delete button
-      const taskRowElDelBtn = document.createElement("button");
-      taskRowElDelBtn.innerText = "✕";
-      taskRowElDelBtn.addEventListener("click", deleteTask);
-      taskRowEl.appendChild(taskRowElDelBtn);
+      // const taskRowElDelBtn = document.createElement('button');
+      // taskRowElDelBtn.innerText = '✕';
+      // taskRowElDelBtn.addEventListener('click', deleteTask);
+      // taskRowEl.appendChild(taskRowElDelBtn);
 
       containerTasks.appendChild(taskRowEl);
     });
@@ -114,12 +104,11 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
     let month = new Date(startMonth);
 
     for (let i = 0; i < numMonths; i++) {
-      const timePeriodEl = document.createElement("div");
-      timePeriodEl.className = "gantt-time-period";
+      const timePeriodEl = document.createElement('div');
+      timePeriodEl.className = 'gantt-time-period';
       // to center text vertically
-      const timePeriodElSpan = document.createElement("span");
-      timePeriodElSpan.innerHTML =
-        months[month.getMonth()] + " " + month.getFullYear();
+      const timePeriodElSpan = document.createElement('span');
+      timePeriodElSpan.innerHTML = months[month.getMonth()] + ' ' + month.getFullYear();
       timePeriodEl.appendChild(timePeriodElSpan);
       containerTimePeriods.appendChild(timePeriodEl);
       month.setMonth(month.getMonth() + 1);
@@ -130,17 +119,23 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
     let month = new Date(startMonth);
 
     for (let i = 0; i < numMonths; i++) {
-      const timePeriodEl = document.createElement("div");
-      timePeriodEl.className = "gantt-time-period";
+      const timePeriodEl = document.createElement('div');
+      timePeriodEl.className = 'gantt-time-period';
       containerTimePeriods.appendChild(timePeriodEl);
 
       // add days as children
       const numDays = getDaysInMonth(month.getFullYear(), month.getMonth() + 1);
 
       for (let i = 1; i <= numDays; i++) {
-        let dayEl = document.createElement("div");
-        dayEl.className = "gantt-time-period";
-        const dayElSpan = document.createElement("span");
+        let dayEl = document.createElement('div');
+        dayEl.className = 'gantt-time-period';
+
+        const currYear = month.getFullYear();
+        const currMonth = month.getMonth() + 1;
+        const formattedDate = createFormattedDateFromStr(currYear, currMonth, i);
+        dayEl.dataset.dateOfDay = formattedDate;
+
+        const dayElSpan = document.createElement('span');
         dayElSpan.innerHTML = i;
         dayEl.appendChild(dayElSpan);
         timePeriodEl.appendChild(dayEl);
@@ -154,8 +149,8 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
     let month = new Date(startMonth);
 
     for (let i = 0; i < numMonths; i++) {
-      const timePeriodEl = document.createElement("div");
-      timePeriodEl.className = "gantt-time-period day";
+      const timePeriodEl = document.createElement('div');
+      timePeriodEl.className = 'gantt-time-period day';
       containerTimePeriods.appendChild(timePeriodEl);
 
       // add days of the week as children
@@ -164,10 +159,10 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
       const numDays = getDaysInMonth(currYear, currMonth);
 
       for (let i = 1; i <= numDays; i++) {
-        let dayEl = document.createElement("div");
-        dayEl.className = "gantt-time-period";
+        let dayEl = document.createElement('div');
+        dayEl.className = 'gantt-time-period';
         const dayOfTheWeek = getDayOfWeek(currYear, currMonth - 1, i - 1);
-        const dayElSpan = document.createElement("span");
+        const dayElSpan = document.createElement('span');
         dayElSpan.innerHTML = dayOfTheWeek;
         dayEl.appendChild(dayElSpan);
         timePeriodEl.appendChild(dayEl);
@@ -178,8 +173,8 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
   }
 
   function createTaskRowsTimePeriods(startMonth, numMonths) {
-    const dayElContainer = document.createElement("div");
-    dayElContainer.className = "gantt-time-period-cell-container";
+    const dayElContainer = document.createElement('div');
+    dayElContainer.className = 'gantt-time-period-cell-container';
     dayElContainer.style.gridTemplateColumns = `repeat(${numMonths}, 1fr)`;
 
     containerTimePeriods.appendChild(dayElContainer);
@@ -187,8 +182,8 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
     tasks.forEach((task) => {
       let month = new Date(startMonth);
       for (let i = 0; i < numMonths; i++) {
-        const timePeriodEl = document.createElement("div");
-        timePeriodEl.className = "gantt-time-period";
+        const timePeriodEl = document.createElement('div');
+        timePeriodEl.className = 'gantt-time-period';
         dayElContainer.appendChild(timePeriodEl);
 
         const currYear = month.getFullYear();
@@ -197,21 +192,17 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
         const numDays = getDaysInMonth(currYear, currMonth);
 
         for (let i = 1; i <= numDays; i++) {
-          let dayEl = document.createElement("div");
-          dayEl.className = "gantt-time-period-cell";
+          let dayEl = document.createElement('div');
+          dayEl.className = 'gantt-time-period-cell';
 
           // color weekend cells differently
           const dayOfTheWeek = getDayOfWeek(currYear, currMonth - 1, i - 1);
-          if (dayOfTheWeek === "S") {
-            dayEl.style.backgroundColor = "#f7f7f7";
+          if (dayOfTheWeek === 'S') {
+            dayEl.style.backgroundColor = '#f7f7f7';
           }
 
           // add task and date data attributes
-          const formattedDate = createFormattedDateFromStr(
-            currYear,
-            currMonth,
-            i
-          );
+          const formattedDate = createFormattedDateFromStr(currYear, currMonth, i);
           dayEl.dataset.task = task.id;
           dayEl.dataset.date = formattedDate;
           // for drag and drop
@@ -229,7 +220,7 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
       const dateStr = createFormattedDateFromDate(taskDuration.start);
       // find gantt-time-period-cell start position
       const startCell = containerTimePeriods.querySelector(
-        `div[data-task="${taskDuration.task}"][data-date="${dateStr}"]`
+        `div[data-task="${taskDuration.task}"][data-date="${dateStr}"]`,
       );
 
       if (startCell) {
@@ -240,40 +231,93 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
   }
 
   function createTaskDurationEl(taskDuration, startCell) {
-    const dayElContainer = containerTimePeriods.querySelector(
-      ".gantt-time-period-cell-container"
-    );
-    const taskDurationEl = document.createElement("div");
-    taskDurationEl.classList.add("taskDuration");
+    const dayElContainer = containerTimePeriods.querySelector('.gantt-time-period-cell-container');
+    const taskDurationEl = document.createElement('div');
+    taskDurationEl.classList.add('taskDuration');
     taskDurationEl.id = taskDuration.id;
 
     const days = dayDiff(taskDuration.start, taskDuration.end);
     taskDurationEl.style.width = `calc(${days} * 100%)`;
 
     // drag and drop
-    taskDurationEl.draggable = "true";
+    taskDurationEl.draggable = 'true';
 
-    taskDurationEl.addEventListener("dragstart", (e) => {
-      taskDurationEl.classList.add("dragging");
+    taskDurationEl.addEventListener('dragstart', (e) => {
+      taskDurationEl.classList.add('dragging');
       // determine taskDuration element that was dragged
       taskDurationElDragged = e.target;
     });
 
-    taskDurationEl.addEventListener("dragend", () => {
-      taskDurationEl.classList.remove("dragging");
+    taskDurationEl.addEventListener('dragend', () => {
+      taskDurationEl.classList.remove('dragging');
     });
 
-    dayElContainer.addEventListener("dragover", (e) => {
+    dayElContainer.addEventListener('dragover', (e) => {
       e.preventDefault();
     });
 
     // add event listener for deleting taskDuration
     taskDurationEl.tabIndex = 0;
-    taskDurationEl.addEventListener("keydown", (e) => {
-      if (e.key === "Delete" || e.key === "Backspace") {
+    taskDurationEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Delete' || e.key === 'Backspace') {
         deleteTaskDuration(e);
       }
     });
+
+    // TODO перетаскивание задачи на задачу
+    taskDurationEl.ondrop = concatTaskDurations;
+
+    if (taskDuration.iconsLeft) {
+      let div = document.createElement('div');
+      div.classList.add('taskDuration__icons');
+
+      let img = document.createElement('img');
+      img.src = '/img/basket.svg';
+      div.appendChild(img);
+
+      img = document.createElement('img');
+      img.src = '/img/delivery.svg';
+      div.appendChild(img);
+
+      taskDurationEl.appendChild(div);
+    }
+
+    if (taskDuration.progress) {
+      // taskDurationEl.innerText = taskDuration.progress;
+      const span = document.createElement('span');
+      span.classList.add('taskDuration__span');
+      span.innerText = taskDuration.progress;
+      taskDurationEl.appendChild(span);
+    }
+
+    if (taskDuration.iconsRight) {
+      let div = document.createElement('div');
+      div.classList.add('taskDuration__icons');
+
+      const img = document.createElement('img');
+      img.src = '/img/excel.svg';
+      div.appendChild(img);
+
+      taskDurationEl.appendChild(div);
+    }
+
+    if (taskDuration.backgroundColor) {
+      taskDurationEl.style.background = taskDuration.backgroundColor;
+    }
+    if (taskDuration.height) {
+      taskDurationEl.style.height = `${taskDuration.height}px`;
+    }
+    if (taskDuration.name) {
+      taskDurationEl.title = taskDuration.name;
+    }
+
+    if (taskDuration.top) {
+      taskDurationEl.style.top = `${taskDuration.top}px`;
+    }
+
+    if (taskDuration.done) {
+      taskDurationEl.classList.add('taskDuration__done');
+    }
 
     // append at start pos
     startCell.appendChild(taskDurationEl);
@@ -281,20 +325,27 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
     return days;
   }
 
+  function concatTaskDurations(e) {
+    if (e.target.id === taskDurationElDragged.id || e.shiftKey === false) return;
+    console.log(e.target.id);
+    console.log(taskDurationElDragged.id);
+    alert('concat Task Durations ?');
+  }
+
   function onTaskDurationDrop(e) {
-    console.log("onTaskDurationDrop");
+    console.log('onTaskDurationDrop');
     const targetCell = e.target;
 
     // prevent adding on another taskDuration
-    if (targetCell.hasAttribute("draggable")) return;
+    if (targetCell.hasAttribute('draggable')) return;
 
     // find task
     const taskDuration = taskDurations.filter(
-      (taskDuration) => taskDuration.id === taskDurationElDragged.id
+      (taskDuration) => taskDuration.id === taskDurationElDragged.id,
     )[0];
 
-    const dataTask = targetCell.getAttribute("data-task");
-    const dataDate = targetCell.getAttribute("data-date");
+    const dataTask = targetCell.getAttribute('data-task');
+    const dataDate = targetCell.getAttribute('data-date');
 
     // remove old position from DOM
     taskDurationElDragged.remove();
@@ -314,7 +365,7 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
     taskDuration.end = newEndDate;
 
     const newTaskDuration = taskDurations.filter(
-      (taskDuration) => taskDuration.id !== taskDurationElDragged.id
+      (taskDuration) => taskDuration.id !== taskDurationElDragged.id,
     );
     newTaskDuration.push(taskDuration);
 
@@ -328,7 +379,7 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
     taskDurationToDelete.remove();
     // update taskDurations
     const newTaskDurations = taskDurations.filter(
-      (taskDuration) => taskDuration.id !== taskDurationToDelete.id
+      (taskDuration) => taskDuration.id !== taskDurationToDelete.id,
     );
     // update original / make API request to update data on backend
     taskDurations = newTaskDurations;
@@ -336,9 +387,9 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
 
   function handleAddTaskDurationForm(e) {
     e.preventDefault();
-    const task = parseInt(e.target.elements["select-task"].value);
-    const start = e.target.elements["start-date"].value;
-    const end = e.target.elements["end-date"].value;
+    const task = parseInt(e.target.elements['select-task'].value);
+    const start = e.target.elements['start-date'].value;
+    const end = e.target.elements['end-date'].value;
     const startDate = new Date(start);
     const endDate = new Date(end);
 
@@ -354,7 +405,7 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
     taskDurations.push(taskDuration);
     // find gantt-time-period-cell start position
     const startCell = containerTimePeriods.querySelector(
-      `div[data-task="${taskDuration.task}"][data-date="${start}"]`
+      `div[data-task="${taskDuration.task}"][data-date="${start}"]`,
     );
 
     if (startCell) {
@@ -390,12 +441,10 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
     // update tasks select
     let newTaskOptionsHTMLStrArr = [];
     tasks.forEach((task) => {
-      newTaskOptionsHTMLStrArr.push(
-        `<option value="${task.id}">${task.name}</option>`
-      );
+      newTaskOptionsHTMLStrArr.push(`<option value="${task.id}">${task.name}</option>`);
 
       taskSelect.innerHTML = `
-        ${newTaskOptionsHTMLStrArr.join("")}
+        ${newTaskOptionsHTMLStrArr.join('')}
       `;
     });
   }
@@ -408,9 +457,7 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
     tasks = newTasks;
 
     // delete any taskDurations associated with the task
-    const newTaskDurations = taskDurations.filter(
-      (taskDuration) => taskDuration.task !== id
-    );
+    const newTaskDurations = taskDurations.filter((taskDuration) => taskDuration.task !== id);
     taskDurations = newTaskDurations;
     createGrid();
   }
