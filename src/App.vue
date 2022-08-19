@@ -33,10 +33,20 @@ export default {
       period: {
         fromSelectYear: 2022,
         fromSelectMonth: 0,
+        fromSelectDay: 1,
+        fromSelectHour: 0,
+        fromSelectMinute: 0,
+
         toSelectYear: 2022,
         toSelectMonth: 0,
+        toSelectDay: 30,
+        toSelectHour: 24,
+        toSelectMinute: 0,
+
+        cellMinute: 360,
       },
       tasks: [
+        { id: -1 },
         { id: 1, name: 'Task 1' },
         { id: 2, name: 'Task 2' },
         { id: 3, name: 'Task 3' },
@@ -47,8 +57,8 @@ export default {
       taskDurations: [
         {
           id: '1',
-          start: new Date('2022/1/2'),
-          end: new Date('2022/1/8'),
+          start: new Date(2022, 0, 1, 0, 15),
+          end: new Date(2022, 0, 1, 1, 15),
           task: 1,
           name: 'Заправка\nСледом тягач',
           backgroundColor: 'red',
@@ -59,8 +69,8 @@ export default {
         },
         {
           id: '11',
-          start: new Date('2022/1/1'),
-          end: new Date('2022/1/5'),
+          start: new Date(2022, 0, 1, 3, 0),
+          end: new Date(2022, 0, 5, 9, 0),
           task: 1,
           name: 'Text',
           backgroundColor: '#65e6bf',

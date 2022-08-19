@@ -183,6 +183,8 @@ button:hover {
   grid-auto-columns: minmax(30px, 1fr);
   text-align: center;
   height: 40px;
+
+  outline: .5px solid #5387ef;
 }
 
 .gantt-time-period span {
@@ -197,6 +199,7 @@ button:hover {
 .gantt-time-period-cell {
   position: relative;
   outline: 0.5px solid #e9eaeb;
+  font-size: 6px;
 }
 
 .day {

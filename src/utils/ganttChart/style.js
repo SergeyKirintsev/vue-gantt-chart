@@ -128,6 +128,9 @@ export function cssStyles() {
         grid-auto-columns: minmax(30px, 1fr);
         text-align: center;
         height: ${CELL_HEIGHT}px;
+
+        outline: 1px solid red;
+        
     }
 
     .gantt-time-period span {

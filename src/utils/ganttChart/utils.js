@@ -48,3 +48,21 @@ export function createFormattedDateFromDate(date) {
   }
   return `${date.getFullYear()}-${monthStr}-${dayStr}`;
 }
+
+export function getMinutesBetweenDates(startDate, endDate) {
+  var diff = endDate.getTime() - startDate.getTime();
+  return (diff / 60000);
+}
+
+export function createFormattedTime(hour, minute) {
+  let hourStr = hour.toString();
+  let minuteStr = minute.toString();
+
+  if (hourStr.length === 1) {
+    hourStr = `0${hourStr}`;
+  }
+  if (minuteStr.length === 1) {
+    minuteStr = `0${minuteStr}`;
+  }
+  return `${hourStr}:${minuteStr}`;
+}
