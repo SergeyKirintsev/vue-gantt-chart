@@ -3,7 +3,11 @@ export const gantData = [
     id: 821,
     timeStart: "2022-04-15T06:00:00.0Z",
     timeFinish: "2022-04-15T10:00:00.0Z",
+
+    acType: "N/A-200",
+    acReg: "ASV",
     mjssNumber: "BKP-20201115-0042",
+
     idLMS: 1,
     mjssStatus: "Completed",
     qtyTasks: 8,
@@ -11,9 +15,7 @@ export const gantData = [
     mhAss: 7,
     completed: { amount: 0.2692307692307692, fill: "rgb(0, 255, 0, .85)" },
     status: "Completed",
-    acReg: "ASV",
     companyCode: "ACCENT",
-    acType: "N/A-200",
     color: "rgb(0, 0, 255, .5)",
     draggable: false,
     y: 0,

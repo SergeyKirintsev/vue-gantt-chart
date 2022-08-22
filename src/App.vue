@@ -46,13 +46,12 @@ export default {
         cellMinute: 360,
       },
       tasks: [
-        { id: -1 },
-        { id: 1, name: 'Task 1' },
-        { id: 2, name: 'Task 2' },
-        { id: 3, name: 'Task 3' },
-        { id: 4, name: 'Task 4' },
-        { id: 8, name: 'Task 8' },
-        { id: 28, name: 'Task 28' },
+        { id: 1, name: 'Task 1' , title: ['N/A-200', 'ASV', 'BKP-20201115-0042']},
+        { id: 2, name: 'Task 2' , title: ['B-737',' RA-73298',' BAA-20201115-0025']},
+        { id: 3, name: 'Task 3' , title: ['a1', 'b2', 'c3']},
+        { id: 4, name: 'Task 4' , title: ['a1', 'b2', 'c3']},
+        { id: 8, name: 'Task 8' , title: ['a1', 'b2', 'c3']},
+        { id: 28, name: 'Task 28', title: ['b737', 'ra', 'BAA'] },
       ],
       taskDurations: [
         {

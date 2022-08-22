@@ -121,7 +121,7 @@ button:hover {
 
 #gantt-grid-container {
   display: grid;
-  grid-template-columns: 150px 1fr;
+  grid-template-columns: 200px 1fr;
   outline: 2px solid #e9eaeb;
 }
 
@@ -158,6 +158,15 @@ button:hover {
   border: none;
   outline: none;
   background: none;
+}
+
+.gantt-task-row__title {
+  font-size: 12px;
+  font-weight: bold
+}
+
+.gantt-task-row__label {
+  font-size: 8px;
 }
 
 #gantt-grid-container__tasks button {

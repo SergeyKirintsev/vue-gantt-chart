@@ -55,7 +55,7 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
   function createGrid() {
     const startMonth = new Date(parseInt(fromSelectYear), parseInt(fromSelectMonth));
     const endMonth = new Date(parseInt(toSelectYear), parseInt(toSelectMonth));
-    const numMonths = monthDiff(startMonth, endMonth) + 1;
+    // const numMonths = monthDiff(startMonth, endMonth) + 1;
 
     const fromPeriod = new Date(
       fromSelectYear,
@@ -88,7 +88,7 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
     // createTaskRowsTimePeriods(startMonth, numMonths);
 
     // createLabels(fromPeriod, numCells, cellMinute);
-
+    createTaskRowsLabels(fromPeriod, numCells, cellMinute);
     createTaskRowsTimePeriodsNew(fromPeriod, numCells, cellMinute);
     addTaskDurations();
   }
@@ -98,27 +98,56 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
   ganttChartElement.appendChild(contentFragment);
 
   function createTaskRows() {
-    const emptyRow = document.createElement('div');
-    emptyRow.className = 'gantt-task-row';
-    // first 3 rows are empty
-    // for (let i = 0; i < 1; i++) {
-    //   containerTasks.appendChild(emptyRow.cloneNode(true));
-    // }
+    const widthColumns = ['40px', '1fr', '1fr']; 
+    const titles = ['acType', 'acReg', 'mjssNumber'];
+    const countTitles = titles?.length;
 
+    const stylesColumns = widthColumns.slice(0, countTitles).join(' ');
+
+    const titleRow = document.createElement('div');
+    titleRow.className = 'gantt-task-row';
+    titleRow.style.gridTemplateColumns = stylesColumns;
+    titleRow.style.display = 'grid';
+    
+    // first i rows are empty
+    // for (let i = 0; i < 1; i++) {
+      //   containerTasks.appendChild(emptyRow.cloneNode(true));
+      // }
+      
+    titles.forEach(title => {
+      const titleDiv = document.createElement('div');
+      titleDiv.className = 'gantt-task-row__title';
+      titleDiv.innerHTML = title;
+      titleRow.appendChild(titleDiv);
+    })
+    containerTasks.appendChild(titleRow);
+      
+    // debugger
     // add task select values
     let taskOptionsHTMLStrArr = [];
+
+
 
     tasks.forEach((task) => {
       const taskRowEl = document.createElement('div');
       taskRowEl.id = task.id;
       taskRowEl.className = 'gantt-task-row';
+      taskRowEl.style.gridTemplateColumns = stylesColumns;
+      taskRowEl.style.display = 'grid';
 
-      const taskRowElInput = document.createElement('input');
-      taskRowEl.appendChild(taskRowElInput);
-      taskRowElInput.value = task.name || '';
+      titles.forEach((_, idx) => {
+        const labelDiv = document.createElement('div')
+        labelDiv.className = 'gantt-task-row__label';
+        labelDiv.innerHTML = task?.title[idx];
+        taskRowEl.appendChild(labelDiv);
+      })
 
-      // update task name
-      taskRowElInput.addEventListener('change', updateTasks);
+      // const taskRowElInput = document.createElement('input');
+      // taskRowEl.appendChild(taskRowElInput);
+      // taskRowElInput.value = task.name || '';
+
+      // // update task name
+      // taskRowElInput.addEventListener('change', updateTasks);
 
       taskOptionsHTMLStrArr.push(`<option value="${task.id}">${task.name}</option>`);
 
@@ -309,6 +338,41 @@ export function GanttChart(ganttChartElement, tasks, taskDurations, period) {
         minute.setMinutes(minute.getMinutes() + cellMinute);
       }
     });
+  }
+
+  function createTaskRowsLabels(startDate, numCells, cellMinute) {
+    const dayElContainer = document.createElement('div');
+    dayElContainer.className = 'gantt-time-period-cell-container';
+    dayElContainer.style.gridTemplateColumns = `repeat(${numCells}, 1fr)`;
+
+    containerTimePeriods.appendChild(dayElContainer);
+
+    let minute = new Date(startDate);
+
+    for (let i = 0; i < numCells; i++) {
+      const timePeriodEl = document.createElement('div');
+      timePeriodEl.className = 'gantt-time-period';
+      
+      const currYear = minute.getFullYear();
+      const currMonth = minute.getMonth() + 1;
+      const currDay = minute.getDate();
+      const currHour = minute.getHours();
+      const currMinute = minute.getMinutes();
+
+      const formattedDate = createFormattedDateFromStr(currYear, currMonth, currDay);
+      const formattedTime = createFormattedTime(currHour, currMinute);
+
+      dayElContainer.appendChild(timePeriodEl);
+
+      let dayEl = document.createElement('div');
+      dayEl.className = 'gantt-time-period-cell';
+
+      dayEl.innerHTML = formattedDate + ' ' + formattedTime
+
+      timePeriodEl.appendChild(dayEl);
+
+      minute.setMinutes(minute.getMinutes() + cellMinute);
+    }
   }
 
   function addTaskDurations() {
